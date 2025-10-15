@@ -58,3 +58,6 @@ crash.log
 
 # Allow Terraform config files to be tracked
 !*.tf
+
+# Track Jenkinsfile despite root ignore
+!Jenkinsfile
