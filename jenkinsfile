@@ -3,18 +3,21 @@ pipeline {
     stages {      
         stage ("terraform init") {
             steps {
-                sh ('terraform init') 
+                withCredentials([aws(credentialsId: 'my-cba-aws-credential', accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
+                    sh ('terraform init') 
+                }
             }
-        }
-        
+        }    
         stage ("terraform Action") {
             steps {
-                echo "Terraform action is --> ${action}"
-                script {
-                    if (action == "plan") {
-                        sh ('terraform plan') 
-                    } else {
-                        sh ('terraform ${action} --auto-approve') 
+                withCredentials([aws(credentialsId: 'my-cba-aws-credential', accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
+                    echo "Terraform action is --> ${action}"
+                    script {
+                        if (action == "plan") {
+                            sh ('terraform plan') 
+                        } else {
+                            sh ('terraform ${action} --auto-approve') 
+                        }
                     }
                 }
             }
