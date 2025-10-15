@@ -60,4 +60,4 @@ crash.log
 !*.tf
 
 # Track Jenkinsfile despite root ignore
-!Jenkinsfile
+!jenkinsfile
